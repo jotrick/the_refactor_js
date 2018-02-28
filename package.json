@@ -11,7 +11,8 @@
   "scripts": {
     "mine": "node ./src/app.js",
     "build": "gulp build",
-    "start": "node ./build/src/app.js",
+    "start": "node ./src/app.js",
+    "start_old": "node ./build/src/app.js",
     "debug": "npm run build && npm run start"
   },
   "engines": {
