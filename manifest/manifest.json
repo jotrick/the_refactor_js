@@ -1,0 +1,106 @@
+﻿{
+  "$schema": "https://statics.teams.microsoft.com/sdk/v1.1/manifest/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.1",
+  "version": "1.0",
+  "id": "<<REPLACE_WITH_REGISTERED_BOT_ID>>",
+  "packageName": "com.sample.microsoftteams",
+  "developer": {
+    "name": "Developer",
+    "websiteUrl": "https://dev.botframework.com",
+    "privacyUrl": "https://privacy.microsoft.com/en-us/privacystatement",
+    "termsOfUseUrl": "https://www.botframework.com/Content/Microsoft-Bot-Framework-Preview-Online-Services-Agreement.htm"
+  },
+  "name": {
+    "short": "Sample App",
+    "full": "Sample App"
+  },
+  "description": {
+    "short": "Sample App - an app for getting started",
+    "full": "This sample is meant to show the fundamentals of a Microsoft Teams app."
+  },
+  "icons": {
+    "color": "sample_icon_color.png",
+    "outline": "sample_icon_outline.png"
+  },
+  "accentColor": "#0079bf",
+  "configurableTabs": [
+    {
+      "configurationUrl": "<<REPLACE_WITH_BASE_URI>>/tab/configurableTab/tabConfiguration.html",
+      "canUpdateConfiguration": false,
+      "scopes": [
+        "team"
+      ]
+    }
+  ],
+  "staticTabs": [
+    {
+      "contentUrl": "<<REPLACE_WITH_BASE_URI>>/tab/staticTab/content.html",
+      "entityId": "1on1test123",
+      "name": "Bot Info",
+      "scopes": [
+        "personal"
+      ]
+    }
+  ],
+  "bots": [
+    {
+      "botId": "<<REPLACE_WITH_REGISTERED_BOT_ID>>",
+      "scopes": [
+        "team",
+        "personal"
+      ],
+      "commandLists": [
+        {
+          "scopes": [
+            "team"
+          ],
+          "commands": [
+            {
+              "title": "hello",
+              "description": "Runs the simplest hello dialog"
+            }
+          ]
+        },
+        {
+          "scopes": [
+            "personal"
+          ],
+          "commands": [
+            {
+              "title": "hello",
+              "description": "Runs the simplest hello dialog"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "composeExtensions": [
+    {
+      "botId": "<<REPLACE_WITH_REGISTERED_BOT_ID>>",
+      "canUpdateConfiguration": true,
+      "commands": [
+        {
+          "id": "search123",
+          "description": "Find a card",
+          "title": "Search",
+          "initialRun": true,
+          "parameters": [
+            {
+              "title": "query123",
+              "name": "query",
+              "description": "Search string"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "<<REPLACE_WITH_BASE_URI_DOMAIN>>"
+  ]
+}

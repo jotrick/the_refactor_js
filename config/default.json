@@ -1,0 +1,10 @@
+{
+    "app": {
+        "baseUri": "REPLACE_WITH_NGROK_HTTPS_ENDPOINT"
+    },
+    "bot": {
+        "botId": "",
+        "botPassword": ""
+    }
+}
+

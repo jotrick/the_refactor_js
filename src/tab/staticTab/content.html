@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bot Info</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <img src="/assets/sample_icon_color.png" alt="Img Error" />
+        <br />
+        <button onclick="showContext()">Click to Show Tab's Context</button>
+        <br />
+        <p id="currentTheme">Current theme will show here when you change it in Teams settings - it can be found on the initial load by fetching the context</p>
+        <br />
+        <p>NOTE: Trying to get the deeplink when this is a static tab does not work. This feature only works when this is a configurable tab.</p>
+        <button onclick="getDeeplink()">Click to get a deeplink to this tab</button>
+        <br />
+        <br />
+
+        <p id="contextOutput"></p>
+
+        <script src='https://statics.teams.microsoft.com/sdk/v1.0/js/MicrosoftTeams.min.js'></script>
+        <!-- <script src='https://code.jquery.com/jquery-1.11.3.min.js'></script> -->
+        <script>
+            var microsoftTeams;
+
+            // $(document).ready(function () {
+                microsoftTeams.initialize();
+                microsoftTeams.registerOnThemeChangeHandler(function(theme) {
+                    document.getElementById('currentTheme').innerHTML = theme;
+                });
+            // });
+
+            function showContext() {
+                microsoftTeams.getContext((context) => {
+                    document.getElementById('contextOutput').innerHTML = JSON.stringify(context);
+                });
+            }
+
+            function getDeeplink() {
+                microsoftTeams.shareDeepLink({subEntityId: 'stuff', subEntityLabel: 'stuff2'});
+            }
+        </script>
+    </body>
+</html>
