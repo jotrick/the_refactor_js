@@ -6,7 +6,7 @@ const builder = require("botbuilder");
 const teams = require("botbuilder-teams");
 const config = require("config");
 
-export function setupComposeExtension(teamsConnector, bot) {
+function setupComposeExtension(teamsConnector, bot) {
     teamsConnector.onQuery("search123",
         (event, query, callback) => {
             handleQuery(bot, event, query, callback);
@@ -143,3 +143,5 @@ function getConfigResponse() {
     ]).toResponse();
     return response;
 }
+
+exports.setupComposeExtension = setupComposeExtension;

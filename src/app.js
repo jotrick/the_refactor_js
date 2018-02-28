@@ -10,7 +10,7 @@ const path = require("path");
 const config = require("config");
 const teams = require("botbuilder-teams");
 const Bot = require("./bot/Bot");
-// const ComposeExtension = require("./composeExtension/ComposeExtension");
+const ComposeExtension = require("./composeExtension/ComposeExtension");
 
 let app = express();
 
@@ -29,7 +29,7 @@ app.post("/api/messages", teamsConnector.listen());
 
 let bot = Bot.setupBot(teamsConnector);
 
-// ComposeExtension.setupComposeExtension(teamsConnector, bot);
+ComposeExtension.setupComposeExtension(teamsConnector, bot);
 
 // Start app
 app.listen(app.get("port"), function () {
