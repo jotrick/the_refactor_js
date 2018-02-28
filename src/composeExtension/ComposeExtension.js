@@ -139,7 +139,7 @@ function parseSettingsAndSave(state, session) {
 function getConfigResponse() {
     let hardCodedUrl = config.get("app.baseUri") + "/composeExtensionSettingsPopup.html?width=5000&height=5000";
     let response = teams.ComposeExtensionResponse.config().actions([
-        builder.CardAction.openUrl(null, hardCodedUrl, "Config"),
+        builder.CardAction.openUrl(null, hardCodedUrl, "Config")
     ]).toResponse();
     return response;
 }
