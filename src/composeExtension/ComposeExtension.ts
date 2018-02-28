@@ -1,28 +1,32 @@
-import * as builder from "botbuilder";
-import * as teams from "botbuilder-teams";
-import * as config from "config";
+// import * as builder from "botbuilder";
+// import * as teams from "botbuilder-teams";
+// import * as config from "config";
 
-export function setupComposeExtension(teamsConnector: teams.TeamsChatConnector, bot: builder.UniversalBot): void {
+const builder = require("botbuilder");
+const teams = require("botbuilder-teams");
+const config = require("config");
+
+export function setupComposeExtension(teamsConnector, bot) {
     teamsConnector.onQuery("search123",
-        (event: builder.IEvent, query: teams.ComposeExtensionQuery, callback: (err: Error, result: teams.IComposeExtensionResponse, statusCode: number) => void): void => {
+        (event, query, callback) => {
             handleQuery(bot, event, query, callback);
         },
     );
 
     teamsConnector.onQuerySettingsUrl(
-        (event: builder.IEvent, query: teams.ComposeExtensionQuery, callback: (err: Error, result: teams.IComposeExtensionResponse, statusCode: number) => void): void => {
+        (event, query, callback) => {
             handleQuerySettingsUrl(event, query, callback);
         },
     );
 
     teamsConnector.onSettingsUpdate(
-        (event: builder.IEvent, query: teams.ComposeExtensionQuery, callback: (err: Error, result: teams.IComposeExtensionResponse, statusCode: number) => void): void => {
+        (event, query, callback) => {
             handleSettingsUpdate(bot, event, query, callback);
         },
     );
 }
 
-function handleQuery(bot: builder.UniversalBot, event: builder.IEvent, query: teams.ComposeExtensionQuery, callback: (err: Error, result: teams.IComposeExtensionResponse, statusCode: number) => void): void {
+function handleQuery(bot, event, query, callback) {
     let manifestInitialRun = "initialRun";
     let manifestParameterName = "query";
     let initialRunParameter = getQueryParameterByName(query, manifestInitialRun);
@@ -34,7 +38,7 @@ function handleQuery(bot: builder.UniversalBot, event: builder.IEvent, query: te
     }
 
     let address = event.address;
-    bot.loadSession(address, (err: any, session: builder.Session) => {
+    bot.loadSession(address, (err, session) => {
         if (!err) {
             if (!session.userData) {
                 let response = teams.ComposeExtensionResponse.message()
@@ -71,7 +75,7 @@ function handleQuery(bot: builder.UniversalBot, event: builder.IEvent, query: te
                 let cardTitle = "Title";
                 let cardText = "Text";
                 
-                let card: builder.ThumbnailCard = null;
+                let card = null;
                 if (session.userData.composeExtensionCardType === "thumbnail") {
                     card = new builder.ThumbnailCard();
                 } else {
@@ -86,7 +90,7 @@ function handleQuery(bot: builder.UniversalBot, event: builder.IEvent, query: te
                     .text(cardText)
                     .images([new builder.CardImage().url(config.get("app.baseUri") + "/assets/sample_icon_color.png")]);
 
-                let cardAsAttachment: teams.ComposeExtensionAttachment = card.toAttachment();
+                let cardAsAttachment = card.toAttachment();
                 cardAsAttachment.preview = previewCard.toAttachment();
                 
                 cardsAsAttachments.push(cardAsAttachment);
@@ -101,14 +105,14 @@ function handleQuery(bot: builder.UniversalBot, event: builder.IEvent, query: te
     });
 }
 
-function handleQuerySettingsUrl(event: builder.IEvent, query: teams.ComposeExtensionQuery, callback: (err: Error, result: teams.IComposeExtensionResponse, statusCode: number) => void): void {
+function handleQuerySettingsUrl(event, query, callback) {
     let configResponse = getConfigResponse();
     callback(null, configResponse, 200);
 }
 
-function handleSettingsUpdate(bot: builder.UniversalBot, event: builder.IEvent, query: teams.ComposeExtensionQuery, callback: (err: Error, result: teams.IComposeExtensionResponse, statusCode: number) => void): void {
+function handleSettingsUpdate(bot, event, query, callback) {
     let address = event.address;
-    bot.loadSession(address, (err: any, session: builder.Session) => {
+    bot.loadSession(address, (err, session) => {
         if (!err) {
             parseSettingsAndSave(query.state, session);
             callback(null, null, 200);
@@ -118,12 +122,12 @@ function handleSettingsUpdate(bot: builder.UniversalBot, event: builder.IEvent, 
     });
 }
 
-function getQueryParameterByName(query: teams.ComposeExtensionQuery, name: string): string {
+function getQueryParameterByName(query, name) {
     let matchingParams = (query.parameters || []).filter(p => p.name === name);
     return matchingParams.length ? matchingParams[0].value : "";
 }
 
-function parseSettingsAndSave(state: any, session: builder.Session): void {
+function parseSettingsAndSave(state, session) {
     let settingsState = JSON.parse(state);
     if (settingsState.cardType) {
         session.userData.composeExtensionCardType = settingsState.cardType;
@@ -132,7 +136,7 @@ function parseSettingsAndSave(state: any, session: builder.Session): void {
     }
 }
 
-function getConfigResponse(): teams.IComposeExtensionResponse {
+function getConfigResponse() {
     let hardCodedUrl = config.get("app.baseUri") + "/composeExtensionSettingsPopup.html?width=5000&height=5000";
     let response = teams.ComposeExtensionResponse.config().actions([
         builder.CardAction.openUrl(null, hardCodedUrl, "Config"),
