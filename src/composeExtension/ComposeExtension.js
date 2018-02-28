@@ -10,19 +10,19 @@ function setupComposeExtension(teamsConnector, bot) {
     teamsConnector.onQuery("search123",
         (event, query, callback) => {
             handleQuery(bot, event, query, callback);
-        },
+        }
     );
 
     teamsConnector.onQuerySettingsUrl(
         (event, query, callback) => {
             handleQuerySettingsUrl(event, query, callback);
-        },
+        }
     );
 
     teamsConnector.onSettingsUpdate(
         (event, query, callback) => {
             handleSettingsUpdate(bot, event, query, callback);
-        },
+        }
     );
 }
 
