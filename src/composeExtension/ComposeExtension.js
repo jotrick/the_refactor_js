@@ -69,7 +69,7 @@ function handleQuery(bot, event, query, callback) {
                 return;
             }
 
-            let cardsAsAttachments = new Array<teams.ComposeExtensionAttachment>();
+            let cardsAsAttachments = [];
 
             for (let i = 0; i < 5; i++) {
                 let cardTitle = "Title";
